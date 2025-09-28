@@ -22,7 +22,7 @@ class LibraryDetailView(DetailView):
 # Registration view
 def register(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("login")
@@ -39,7 +39,7 @@ def login_view(request):
             login(request, user)
             return redirect("list_books")  # redirect after login
     else:
-        form = AuthenticationForm()
+        form = UserCreationForm()
     return render(request, "relationship_app/login.html", {"form": form})
 
 # Logout view
