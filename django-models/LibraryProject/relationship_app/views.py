@@ -20,7 +20,7 @@ class LibraryDetailView(DetailView):
     context_object_name = "library"
 
 # Registration view
-def register_view(request):
+def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
