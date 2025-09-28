@@ -38,7 +38,7 @@ def query_books_by_author(author_name):
     print(f"\n--- Books by author: {author_name} ---")
     try:
         author = Author.objects.get(name=author_name)
-        books = author.books.all()
+        books = Book.objects.filter(author=author)
         for b in books:
             print(f"- {b.title}")
         if not books:
