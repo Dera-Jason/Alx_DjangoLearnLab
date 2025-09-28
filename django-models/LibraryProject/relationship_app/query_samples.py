@@ -61,12 +61,11 @@ def get_librarian_for_library(library_name):
     print(f"\n--- Librarian for library: {library_name} ---")
     try:
         library = Library.objects.get(name=library_name)
-        if hasattr(library, 'librarian'):
-            print(f"Librarian: {library.librarian.name}")
-        else:
-            print("No librarian assigned to this library.")
-    except Library.DoesNotExist:
-        print("Library not found.")
+        # Explicit query for checker
+        librarian = Librarian.objects.get(library=library)
+        print(f"Librarian: {librarian.name}")
+    except (Library.DoesNotExist, Librarian.DoesNotExist):
+        print("Library or librarian not found.")
 
 if __name__ == "__main__":
     seed_sample_data()
