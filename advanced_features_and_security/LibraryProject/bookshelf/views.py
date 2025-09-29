@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Book
 from django.db.models import Q
-from .forms import BookForm
+from .forms import BookForm, ExampleForm
 
 # Create your views here.
 # Function-based view for listing books (checker expects book_list)
