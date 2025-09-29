@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Book
+from django.db.models import Q
 from .forms import BookForm
 
 # Create your views here.
@@ -23,6 +24,12 @@ def add_book(request):
         form = BookForm()
     return render(request, "relationship_app/add_book.html", {"form": form})
 
+def search_books(request):
+    query = request.GET.get('q', '')
+    books = Book.objects.filter(
+        Q(title__icontains=query) | Q(author__name__icontains=query)
+    )
+    return render(request, "bookshelf/book_list.html", {"books": books})
 
 # Edit book (requires can_edit permission)
 @permission_required('bookshelf.can_edit', raise_exception=True)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'bookshelf',
     'relationship_app',
     'django_extensions',
+    'csp'
 ]
 
 MIDDLEWARE = [
@@ -53,7 +54,33 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False  # Set to False for production
+
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Example CSP configuration
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", 'ajax.googleapis.com')
+CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com')
+CSP_FONT_SRC = ("'self'", 'fonts.gstatic.com')
+
+# Optional: HSTS (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 3600  # adjust as needed
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Recommended: Allowed hosts (replace with your domain)
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'yourdomain.com']
+
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
