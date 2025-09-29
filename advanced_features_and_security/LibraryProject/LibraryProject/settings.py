@@ -60,10 +60,20 @@ MIDDLEWARE = [
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False for production
 
-# Security settings
+# Enforce HTTPS redirects for all HTTP requests
+SECURE_SSL_REDIRECT = True
+
+# HSTS (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Additional security headers
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Cookies over HTTPS only
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
