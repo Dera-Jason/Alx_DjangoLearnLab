@@ -61,7 +61,7 @@ def is_member(user):
     return user.is_authenticated and user.profile.role == "Member"
 
 # Add a book (requires can_add_book permission)
-@permission_required('relationship_app.can_add_book', raise_exception=True)
+@permission_required('relationship_app.can_create', raise_exception=True)
 def add_book(request):
     if request.method == "POST":
         form = BookForm(request.POST)
@@ -73,7 +73,7 @@ def add_book(request):
     return render(request, "relationship_app/add_book.html", {"form": form})
 
 # Edit a book (requires can_change_book permission)
-@permission_required('relationship_app.can_change_book', raise_exception=True)
+@permission_required('relationship_app.can_edit', raise_exception=True)
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == "POST":
@@ -86,7 +86,7 @@ def edit_book(request, pk):
     return render(request, "relationship_app/edit_book.html", {"form": form})
 
 # Delete a book (requires can_delete_book permission)
-@permission_required('relationship_app.can_delete_book', raise_exception=True)
+@permission_required('relationship_app.can_delete', raise_exception=True)
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == "POST":
@@ -108,3 +108,13 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, "relationship_app/member_view.html")
+
+# Permissions setup:
+# - can_view: users can view books
+# - can_create: users can create books
+# - can_edit: users can edit books
+# - can_delete: users can delete books
+# Groups:
+# - Viewers: can_view
+# - Editors: can_view, can_create, can_edit
+# - Admins: all permissions
